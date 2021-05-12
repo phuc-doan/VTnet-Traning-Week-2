@@ -1,15 +1,5 @@
 # VTnet-Traning-Week-2
 
-![186474723_4060144630720750_1954254143321618585_n](https://user-images.githubusercontent.com/83824403/118011564-6235b100-b37a-11eb-9635-a0e0c31cb33b.png)
-![186474723_4060144630720750_1954254143321618585_n](https://user-images.githubusercontent.com/83824403/118011588-695cbf00-b37a-11eb-85d0-538f87c623e2.png)
-![186402497_376888587001479_4865151441127697097_n](https://user-images.githubusercontent.com/83824403/118011593-6d88dc80-b37a-11eb-857c-a44c45c99bc1.png)
-![184586293_315092610053474_6176911539195705320_n](https://user-images.githubusercontent.com/83824403/118011596-6e217300-b37a-11eb-9ba8-325c0960473e.png)
-![183274249_477380299999096_1043020392940805635_n (1)](https://user-images.githubusercontent.com/83824403/118011604-6f52a000-b37a-11eb-9700-1bf6a5a24b07.png)
-![186474723_4060144630720750_1954254143321618585_n](https://user-images.githubusercontent.com/83824403/118012250-0e779780-b37b-11eb-8a79-6f0b995df9d4.png)
-![186402497_376888587001479_4865151441127697097_n](https://user-images.githubusercontent.com/83824403/118012261-10d9f180-b37b-11eb-8fdf-b676d47cb264.png)
-![184586293_315092610053474_6176911539195705320_n](https://user-images.githubusercontent.com/83824403/118012268-120b1e80-b37b-11eb-945b-31033090ec90.png)
-![183274249_477380299999096_1043020392940805635_n (1)](https://user-images.githubusercontent.com/83824403/118012273-12a3b500-b37b-11eb-96ec-8a4549dff9a2.png)
-
 
 # Pratice 1 - Install Ansible and Deploy WordPress(docker) using Ansible
 # Step 1: Install Ansible
@@ -78,6 +68,9 @@ ping all machine you defined on your own inventory.ini file
     service:
       name: docker
       state: started
+      
+![186474723_4060144630720750_1954254143321618585_n](https://user-images.githubusercontent.com/83824403/118013066-eb011c80-b37b-11eb-8dfe-83081100247a.png)
+
 
 # Step 6: Deploy WordPress with Docker-Compose
 - name: deploy wordpress
@@ -97,7 +90,13 @@ ping all machine you defined on your own inventory.ini file
     become: yes
     docker_container_info:
      name: my_container
-    register: result
+    register: result 
+    
+     ![186402497_376888587001479_4865151441127697097_n](https://user-images.githubusercontent.com/83824403/118013120-f8b6a200-b37b-11eb-8303-71432ad4bc2c.png)
+![183274249_477380299999096_1043020392940805635_n (1)](https://user-images.githubusercontent.com/83824403/118013128-fa806580-b37b-11eb-84ad-3adf52c8fa38.png)
+
     
 # Step 7: If you wanna check, you can type: sudo docker container ps
 and Let's see!
+
+![184586293_315092610053474_6176911539195705320_n](https://user-images.githubusercontent.com/83824403/118012587-6dd5a780-b37b-11eb-82cd-3ab48af19e3e.png)
