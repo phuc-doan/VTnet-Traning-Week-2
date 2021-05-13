@@ -110,3 +110,114 @@ ping all machine you defined on your own inventory.ini file
  and Let's see!
 
 ![184586293_315092610053474_6176911539195705320_n](https://user-images.githubusercontent.com/83824403/118012587-6dd5a780-b37b-11eb-82cd-3ab48af19e3e.png)
+
+
+
+
+# Practice 2: Using Ansible to set up docker on VMs and deploy Wordpress on Ubuntu1, MariaDB on Ubuntu2
+###Step 1: Create file ansible.cfg, inventory.ini
+```
+ansible.cfg (same practice 1)
+[defaults]
+host_key_checking = False
+remote_user = dvp
+inventory.ini (define database host)
+[ubuntu1]
+192.168.1.127
+
+[ubuntu2]
+192.168.1.130
+
+[ubuntu1:vars]
+ansible_user=dvp
+ansible_ssh_pass=1
+
+[ubuntu2:vars]
+ansible_user=phuc
+ansible_ssh_pass=1
+
+```
+###Step 2: Configure and run ansible playbook to install docker on managed machine
+Create file install-docker-playbook.yaml
+```
+- name: set up docker
+  hosts: ubuntu1
+  gather_facts: false
+  tasks:
+    - name: Ping
+      ping:
+      register: result
+    - name: Install docker.io
+      become: yes
+      apt:
+        name: docker.io
+        state: present
+    - name: Ensure docker service is running
+      become: yes
+      service:
+        name: docker
+        state: started
+  ```
+Now, run command:
+
+$ ansible-playbook -i inventory.ini install-docker-playbook.yaml
+
+
+###Step 3:Create your deploy-mariadb-playbook.yaml file on ubuntu1:
+```
+- name: deploy mariadb
+  hosts: ubuntu1
+  gather_facts: false
+
+  tasks:
+  - name: create volume for db
+    become: yes
+    command: docker volume create --name mariadb_data
+  - name: deploy mariadb
+    become: yes
+    command: docker run -d --name mariadb --env ALLOW_EMPTY_PASSWORD=yes --env MARIADB_USER=bn_wordpress --env MARIADB_PASSWORD=bitnami --env MARIADB_DATABASE=bitnami_wordpress --network host --volume mariadb_data:/bitnami/mariadb  bitnami/mariadb:latest   
+    register: result2
+  - name: setup data
+    debug:
+     var: result2
+  - name: ensure docker-compose container is running
+    become: yes
+    docker_container_info:
+     name: my_container
+    register: result
+  - name: checking result
+    debug:
+     var: result
+ ```
+
+$ ansible-playbook -i inventory.ini deploy-mairiadb-playbook.yaml
+![186367242_847727439152528_4795572193451641105_n](https://user-images.githubusercontent.com/83824403/118153336-fb7acb00-b43f-11eb-834c-b6371919ac06.png)
+
+
+
+###Step 4: Configure and run ansible playbook to deploy WordPress on Ubuntu2
+Create file deploy-wordpress-playbook.yaml
+
+```- name: deploy wordpress
+  hosts: phuc
+
+  gather_facts: false
+  tasks:
+    - name: Ensure docker service is running
+      become: yes
+      service:
+        name: docker
+        state: started
+    - name: Create a volume for wordpress
+      become: yes
+      command: docker volume create --name wordpress_data
+    - name: Create the Wordpress container
+      become: yes
+      command: docker run -d --name wordpress -p 8080:8080 -p 8443:8443 --env ALLOW_EMPTY_PASSWORD=yes --env WORDPRESS_DATABASE_USER=bn_wordpress --env WORDPRESS_DATABASE_PASSWORD=bitnami --env WORDPRESS_DATABASE_NAME=bitnami_wordpress --network host --add-host mariadb:192.168.88.137 --volume wordpress_data:/bitnami/wordpress bitnami/wordpress:latest
+ ```
+
+
+
+Result when we access to Localhost
+
+![186008087_842770916328740_3723287776897405379_n](https://user-images.githubusercontent.com/83824403/118153355-00d81580-b440-11eb-8f1d-466ccdbed477.png)
