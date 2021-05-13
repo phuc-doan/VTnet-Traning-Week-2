@@ -2,7 +2,7 @@
 
 
 # Pratice 1 - Install Ansible and Deploy WordPress(docker) using Ansible
-# Step 1: Install Ansible
+## Step 1: Install Ansible
 Install on Ubuntu
 
 $ sudo apt update
@@ -19,7 +19,7 @@ inventory.ini define hosts, groups you want to manage
 
 my inventory.ini file
 
-[ubuntu1]
+* [ubuntu1]
 192.168.1.127
 
 [ubuntu2]
@@ -39,7 +39,7 @@ Then, you change ansible.cfg file
 host_key_checking = False
 inventory = /home/Documents/test-ansible/inventory.ini
 remote_user = dvp
-
+*
 # Step 4: Test Ansible with your own ansible.cfg file
 ping all machine you defined on your own inventory.ini file
 
