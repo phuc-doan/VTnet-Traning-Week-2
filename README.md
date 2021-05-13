@@ -115,7 +115,7 @@ ping all machine you defined on your own inventory.ini file
 
 
 # Practice 2: Using Ansible to set up docker on VMs and deploy Wordpress on Ubuntu1, MariaDB on Ubuntu2
-###Step 1: Create file ansible.cfg, inventory.ini
+### Step 1: Create file ansible.cfg, inventory.ini
 ```
 ansible.cfg (same practice 1)
 [defaults]
@@ -137,7 +137,7 @@ ansible_user=phuc
 ansible_ssh_pass=1
 
 ```
-###Step 2: Configure and run ansible playbook to install docker on managed machine
+### Step 2: Configure and run ansible playbook to install docker on managed machine
 Create file install-docker-playbook.yaml
 ```
 - name: set up docker
@@ -163,7 +163,7 @@ Now, run command:
 $ ansible-playbook -i inventory.ini install-docker-playbook.yaml
 
 
-###Step 3:Create your deploy-mariadb-playbook.yaml file on ubuntu1:
+### Step 3:Create your deploy-mariadb-playbook.yaml file on ubuntu1:
 ```
 - name: deploy mariadb
   hosts: ubuntu1
@@ -195,7 +195,7 @@ $ ansible-playbook -i inventory.ini deploy-mairiadb-playbook.yaml
 
 
 
-###Step 4: Configure and run ansible playbook to deploy WordPress on Ubuntu2
+### Step 4: Configure and run ansible playbook to deploy WordPress on Ubuntu2
 Create file deploy-wordpress-playbook.yaml
 
 ```- name: deploy wordpress
@@ -218,6 +218,6 @@ Create file deploy-wordpress-playbook.yaml
 
 
 
-Result when we access to Localhost
+### Result when we access to Localhost
 
 ![186008087_842770916328740_3723287776897405379_n](https://user-images.githubusercontent.com/83824403/118153355-00d81580-b440-11eb-8f1d-466ccdbed477.png)
