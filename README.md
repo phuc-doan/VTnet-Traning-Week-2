@@ -213,7 +213,7 @@ Create file deploy-wordpress-playbook.yaml
       command: docker volume create --name wordpress_data
     - name: Create the Wordpress container
       become: yes
-      command: docker run -d --name wordpress -p 8080:8080 -p 8443:8443 --env ALLOW_EMPTY_PASSWORD=yes --env WORDPRESS_DATABASE_USER=bn_wordpress --env WORDPRESS_DATABASE_PASSWORD=bitnami --env WORDPRESS_DATABASE_NAME=bitnami_wordpress --network host --add-host mariadb:192.168.88.137 --volume wordpress_data:/bitnami/wordpress bitnami/wordpress:latest
+      command: docker run -d --name wordpress -p 8080:8080 -p 8443:8443 --env ALLOW_EMPTY_PASSWORD=yes --env WORDPRESS_DATABASE_USER=bn_wordpress --env WORDPRESS_DATABASE_PASSWORD=bitnami --env WORDPRESS_DATABASE_NAME=bitnami_wordpress --network host --add-host mariadb:192.168.1.127 --volume wordpress_data:/bitnami/wordpress bitnami/wordpress:latest
  ```
 
 
